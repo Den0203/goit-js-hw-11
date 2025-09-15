@@ -1,58 +1,43 @@
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
-let lightboxInstance = null;
+const galleryContainer = document.querySelector('.gallery');
+const loader = document.querySelector('.loader');
 
-export function initLightbox() {
-  if (!lightboxInstance) {
-    lightboxInstance = new SimpleLightbox('.gallery a', {
-      captionsData: 'alt',
-      captionDelay: 250,
-    });
-  } else {
-    lightboxInstance.refresh();
-  }
-}
+export const lightbox = new SimpleLightbox('.gallery a');
 
 export function createGallery(images) {
-  const galleryEl = document.querySelector('.gallery');
   const markup = images
-    .map(img => {
-      return `
-      <li class="photo-card">
-        <a class="gallery-link" href="${img.largeImageURL}">
-          <img src="${img.webformatURL}" alt="${img.tags}" loading="lazy" />
-        </a>
-        <div class="info">
-          <p class="info-item"><b>Likes</b><span>${img.likes}</span></p>
-          <p class="info-item"><b>Views</b><span>${img.views}</span></p>
-          <p class="info-item"><b>Comments</b><span>${img.comments}</span></p>
-          <p class="info-item"><b>Downloads</b><span>${img.downloads}</span></p>
-        </div>
-      </li>
-    `;
-    })
+    .map(
+      img => `
+      <div class="wraper">
+    <li class="gallery-item">
+      <a href="${img.largeImageURL}">
+        <img src="${img.webformatURL}" alt="${img.tags}" loading="lazy" />
+      </a>
+      <div class="info">
+        <p>Likes: ${img.likes}</p>
+        <p>Views: ${img.views}</p>
+        <p>Comments: ${img.comments}</p>
+        <p>Downloads: ${img.downloads}</p>
+      </div>
+    </li>
+    </div>
+  `
+    )
     .join('');
-
-  galleryEl.insertAdjacentHTML('beforeend', markup);
-  initLightbox();
+  galleryContainer.insertAdjacentHTML('beforeend', markup);
+  lightbox.refresh();
 }
 
 export function clearGallery() {
-  const galleryEl = document.querySelector('.gallery');
-  galleryEl.innerHTML = '';
+  galleryContainer.innerHTML = '';
 }
 
 export function showLoader() {
-  const loader = document.getElementById('loader');
-  if (!loader) return;
-  loader.style.display = 'flex';
-  loader.setAttribute('aria-hidden', 'false');
+  loader.classList.add('visible');
 }
 
 export function hideLoader() {
-  const loader = document.getElementById('loader');
-  if (!loader) return;
-  loader.style.display = 'none';
-  loader.setAttribute('aria-hidden', 'true');
+  loader.classList.remove('visible');
 }
