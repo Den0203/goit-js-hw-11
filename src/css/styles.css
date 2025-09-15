@@ -56,12 +56,16 @@
 }
 .loader {
   display: none;
-  margin: 0 auto;
+  font-size: 16px;
+  color: #4e75ff;
+  text-align: center;
+  margin-top: 20px;
 }
 
 .loader.visible {
   display: block;
 }
+
 .gallery {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

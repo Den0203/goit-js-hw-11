@@ -2,11 +2,8 @@ import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
 const galleryContainer = document.querySelector('.gallery');
-// const loader = document.querySelector('.loader');
-const loader = document.createElement('span');
-loader.className = 'loader';
-loader.textContent = 'Loading images, please wait...';
-document.body.appendChild(loader);
+const loader = document.querySelector('.loader');
+
 export const lightbox = new SimpleLightbox('.gallery a');
 
 export function createGallery(images) {
